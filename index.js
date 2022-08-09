@@ -27,23 +27,23 @@ var error="";
 
 app.use(cors());
 
-
+app.listen(port);
 
 // connect to mongodb & listen for requests
-const dbURI= "mongodb+srv://admin:pioneer007@cluster0.dg9t8.mongodb.net/IM?retryWrites=true&w=majority"
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => {
-     app.listen(port);
-  })
-  .catch(err => {
-    error = "There was an error witn MongoDB";
-    app.listen(port);
-    console.log(err)
-  });
+// const dbURI= "mongodb+srv://admin:pioneer007@cluster0.dg9t8.mongodb.net/IM?retryWrites=true&w=majority"
+// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+//   .then(result => {
+//      app.listen(port);
+//   })
+//   .catch(err => {
+//     error = "There was an error witn MongoDB";
+//     app.listen(port);
+//     console.log(err)
+//   });
 
 ////////////// Middleware //////////////////////////
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+//app.use(express.urlencoded({ extended: true }));
+//app.use(bodyParser.json());
 
 // app.use((req, res, next) => {
 
@@ -67,9 +67,9 @@ app.use(bodyParser.json());
 // });
 
 ///////////////// Routes ///////////////////////////
-app.use('/users', usersRoutes); 
-app.use('/incidents', incidentsRoutes);
-app.use('/notifications', notificationsRoutes);
+//app.use('/users', usersRoutes); 
+//app.use('/incidents', incidentsRoutes);
+//app.use('/notifications', notificationsRoutes);
 
 //////////////  For Test //////////////////////////
 app.get('/person', (req, res) => {  
