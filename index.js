@@ -25,7 +25,7 @@ const port = process.env.PORT || 3333;
 
 var error="";
 
-app.use(cors());
+//app.use(cors());
 
 app.listen(port);
 
