@@ -15,7 +15,7 @@ var error="";
 
 app.use(cors());
 
-app.get('/person', (req, res) => {  
+app.get('/', (req, res) => {  
   res.json("Your node JS Working but possibly without MongoDB" + error);
 });
 
