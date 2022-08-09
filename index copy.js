@@ -15,15 +15,14 @@ var error="";
 
 app.use(cors());
 
-app.get('/', (req, res) => {  
-  res.json("Your node JS Working but possibly without MongoDB" + error);
-});
 
 
 // connect to mongodb & listen for requests
 const dbURI= "mongodb+srv://admin:pioneer007@cluster0.dg9t8.mongodb.net/IM?retryWrites=true&w=majority"
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => app.listen(port))
+  .then(result => {
+     app.listen(port);
+  })
   .catch(err => {
     error = "There was an error witn MongoDB";
     app.listen(port);
@@ -34,34 +33,34 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use((req, res, next) => {
+// app.use((req, res, next) => {
 
-  if (req.path.toLowerCase() === "/users/login" || req.path.toLowerCase() === "/person"   || req.path.toLowerCase().includes("incidents/downloadfile")) {
-    console.log("path: ", req.path);
-    next();
-    return;
-  }
+//   if (req.path.toLowerCase() === "/users/login" || req.path.toLowerCase() === "/person"   || req.path.toLowerCase().includes("incidents/downloadfile")) {
+//     console.log("path: ", req.path);
+//     next();
+//     return;
+//   }
 
-  var token = req.headers["x-access-token"];
+//   var token = req.headers["x-access-token"];
 
-  if (!token)
-    return res.status(401).send({ auth: false, message: "No token provided." });
+//   if (!token)
+//     return res.status(401).send({ auth: false, message: "No token provided." });
 
-  jwt.verify(token, config.secret, function (err, decoded) {
-    if (err)
-      return res.status(401).send({ auth: false, message: "Error in authentication. Session expired or invalid. " });
+//   jwt.verify(token, config.secret, function (err, decoded) {
+//     if (err)
+//       return res.status(401).send({ auth: false, message: "Error in authentication. Session expired or invalid. " });
 
-    next();
-  });
-});
+//     next();
+//   });
+// });
 
 ///////////////// Routes ///////////////////////////
 app.use('/users', usersRoutes); 
 app.use('/incidents', incidentsRoutes);
 app.use('/notifications', notificationsRoutes);
 
-////////////////  For Test //////////////////////////
-// app.get('/person', (req, res) => {  
-//     res.json("Your node JS Working but possibly without MongoDB" + error);
-// });
+//////////////  For Test //////////////////////////
+app.get('/person', (req, res) => {  
+    res.json("Your node JS Working but possibly without MongoDB" + error);
+});
 
