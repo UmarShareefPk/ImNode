@@ -9,14 +9,14 @@ var cors = require('cors');
 const bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var config = require('./config');
-
+const port = process.env.PORT || 3333;
 
 app.use(cors());
 
 // connect to mongodb & listen for requests
 const dbURI= "mongodb+srv://admin:pioneer007@cluster0.dg9t8.mongodb.net/IM?retryWrites=true&w=majority"
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(result => app.listen(3333))
+  .then(result => app.listen(port))
   .catch(err => console.log(err));
 
 ////////////// Middleware //////////////////////////

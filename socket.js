@@ -10,6 +10,8 @@ const io = require('socket.io')(http,  {
   }
 });
 
+const port = process.env.PORT || 5555;
+
 
 io.on('connection', (socket) => {
     //console.log("socket", socket.id);
@@ -36,8 +38,8 @@ io.on('connection', (socket) => {
     });   
   });  
 
-  http.listen(5555, () => {
-    console.log(`Socket.IO server running at http://localhost:${5555}/`);
+  http.listen(port, () => {
+    console.log(`Socket.IO server running at http://localhost:${port}/`);
   });
   
   module.exports = http;
