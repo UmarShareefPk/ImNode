@@ -27,7 +27,7 @@ const port = process.env.PORT || 3333;
 
 app.use(cors());
 
-app.listen(port);
+//app.listen(port);
 
 //connect to mongodb & listen for requests
 const dbURI= "mongodb+srv://admin:pioneer007@cluster0.dg9t8.mongodb.net/IM?retryWrites=true&w=majority"
