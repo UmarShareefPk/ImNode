@@ -12,15 +12,15 @@
 
 const express = require('express');
 const app = express();
-//const mongoose = require('mongoose');
-//const usersRoutes = require('./routes/usersRoutes');
-//const incidentsRoutes = require('./routes/incidentsRoutes');
-//const notificationsRoutes = require('./routes/notificationsRoutes');
-//const httpSocket = require('./socket'); 
-//var cors = require('cors');
-//const bodyParser = require('body-parser');
-//var jwt = require('jsonwebtoken');
-//var config = require('./config');
+const mongoose = require('mongoose');
+const usersRoutes = require('./routes/usersRoutes');
+const incidentsRoutes = require('./routes/incidentsRoutes');
+const notificationsRoutes = require('./routes/notificationsRoutes');
+const httpSocket = require('./socket'); 
+var cors = require('cors');
+const bodyParser = require('body-parser');
+var jwt = require('jsonwebtoken');
+var config = require('./config');
 const port = process.env.PORT || 3333;
 
 //var error="";
