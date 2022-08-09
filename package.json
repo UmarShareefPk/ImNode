@@ -2,9 +2,9 @@
   "name": "im_nodejs",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+ 
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "test": "mocha test.js --recursive",
     "bump-version": "npm version patch"
   },
