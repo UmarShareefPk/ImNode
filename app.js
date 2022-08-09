@@ -11,13 +11,19 @@ var jwt = require('jsonwebtoken');
 var config = require('./config');
 const port = process.env.PORT || 3333;
 
+var error="";
+
 app.use(cors());
 
 // connect to mongodb & listen for requests
 const dbURI= "mongodb+srv://admin:pioneer007@cluster0.dg9t8.mongodb.net/IM?retryWrites=true&w=majority"
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => app.listen(port))
-  .catch(err => console.log(err));
+  .catch(err => {
+    error = "There was an error witn MongoDB";
+    app.listen(port);
+    console.log(err)
+  });
 
 ////////////// Middleware //////////////////////////
 app.use(express.urlencoded({ extended: true }));
@@ -51,6 +57,6 @@ app.use('/notifications', notificationsRoutes);
 
 ////////////////  For Test //////////////////////////
 app.get('/person', (req, res) => {  
-    res.json("Your node JS Working");
+    res.json("Your node JS Working but possibly without MongoDB" + error);
 });
 
