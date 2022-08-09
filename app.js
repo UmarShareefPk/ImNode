@@ -25,7 +25,8 @@ app.use(bodyParser.json());
 
 app.use((req, res, next) => {
 
-  if (req.path.toLowerCase() === "/users/login" || req.path.toLowerCase() === "/person" || req.path.toLowerCase().includes("incidents/downloadfile")) {
+  if (req.path.toLowerCase() === "/users/login" || req.path.toLowerCase() === "/person"   || req.path.toLowerCase().includes("incidents/downloadfile")) {
+    console.log("path: ", req.path);
     next();
     return;
   }
@@ -44,7 +45,7 @@ app.use((req, res, next) => {
 });
 
 ///////////////// Routes ///////////////////////////
-app.use('/users', usersRoutes);
+app.use('/users', usersRoutes); 
 app.use('/incidents', incidentsRoutes);
 app.use('/notifications', notificationsRoutes);
 

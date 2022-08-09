@@ -5,7 +5,7 @@ var config = require('../config');
 var fs = require('fs');
 
 const login = async (req, res) => {
- 
+ console.log("inside login");
   var userlogin = await UserLogin.find({Username : req.body.username , Password : req.body.password})
   
    if (userlogin.length === 0) 

@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node app",
+    "start": "node app.js",
     "test": "mocha test.js --recursive",
     "bump-version": "npm version patch"
   },
