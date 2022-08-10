@@ -16,6 +16,9 @@ const mongoose = require('mongoose');
 const usersRoutes = require('./routes/usersRoutes');
 const incidentsRoutes = require('./routes/incidentsRoutes');
 const notificationsRoutes = require('./routes/notificationsRoutes');
+const WatchList = require('./models/watchList');
+const Notification = require('./models/notification');
+const User = require('./models/user');
 //const httpSocket = require('./socket'); 
 var cors = require('cors');
 const bodyParser = require('body-parser');
@@ -23,21 +26,50 @@ var jwt = require('jsonwebtoken');
 var config = require('./config');
 const port = process.env.PORT || 3333;
 
-//var error="";
+
 
 app.use(cors());
 
-//app.listen(port);
+var io = null;
 
 //connect to mongodb & listen for requests
 const dbURI= "mongodb+srv://admin:pioneer007@cluster0.dg9t8.mongodb.net/IM?retryWrites=true&w=majority"
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(result => {
-     app.listen(port);
+    var server =  app.listen(port);
+     io = require('socket.io')(server, {
+      cors: {
+        origin: '*',
+      }
+    });
+     io.on('connection', (socket) => {
+      //console.log("socket", socket.id);
+      
+      socket.on('Incident Updated', async (incidentid) => {
+          console.log(`${incidentid} has been updated. now send clients.`);
+         let watchers = await WatchList.find({IncidentId: incidentid});
+       //  console.log("watchers",watchers);
+         let userIds = [];
+         watchers.map(w => {
+             userIds.push(w.UserId);
+         })
+         let users = await User.find({ _id: { "$in" : userIds} });
+       //  console.log("users",users);
+         let socketIds = [];
+         users.map(u => {
+          socketIds.push(u.SocketId);
+         });
+        // console.log("sockets : ", socketIds);
+         socketIds.forEach(id => {
+              io.to(id).emit('UpdateNotifications', incidentid);
+         });
+       
+      });   
+    });  
   })
   .catch(err => {
     error = "There was an error witn MongoDB";
-    app.listen(port);
+    //var server = app.listen(port);
     console.log(err)
   });
 
@@ -75,4 +107,6 @@ app.use('/notifications', notificationsRoutes);
 app.get('/person', (req, res) => {  
     res.json("Your node JS Working but possibly without MongoDB");
 });
+
+
 
